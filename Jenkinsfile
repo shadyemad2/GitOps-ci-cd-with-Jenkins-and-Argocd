@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'Master', url: 'https://github.com/shadyemad2/GitOps-ci-cd-with-Jenkins-and-Argocd'
+                git branch: 'main', url: 'https://github.com/shadyemad2/GitOps-ci-cd-with-Jenkins-and-Argocd'
             }
         }
 
@@ -26,7 +26,7 @@ pipeline {
         stage('Build Image') {
             steps {
                 script {
-                    def app = docker.build("${IMAGE_NAME}")
+                    docker.build("${IMAGE_NAME}")
                 }
             }
         }
@@ -35,24 +35,24 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('https://index.docker.io/v1/', DOCKER_CREDENTIALS_ID) {
-                        def app = docker.image("${IMAGE_NAME}")
-                        app.push('latest')
+                        docker.image("${IMAGE_NAME}").push('latest')
                     }
                 }
             }
-           stage('Update Kubernetes Manifest') {
-    steps {
-        sh '''
-          sed -i "s|image:.*|image: shadyemad/gitops-app:latest|" kubernetes/app.yaml
-          git config --global user.name "jenkins"
-          git config --global user.email "jenkins@example.com"
-          git add kubernetes/app.yaml
-          git commit -m "Update image to latest"
-          git push origin Master
-        '''
-    }
-}
+        }
 
+        stage('Update Kubernetes Manifest') {
+            steps {
+                sh '''
+                  sed -i "s|image:.*|image: shadyemad/gitops-app:latest|" kubernetes/app.yaml
+                  git config --global user.name "jenkins"
+                  git config --global user.email "jenkins@example.com"
+                  git add kubernetes/app.yaml
+                  git commit -m "Update image to latest"
+                  git push origin main
+                '''
+            }
         }
     }
 }
+
