@@ -35,22 +35,25 @@ pipeline {
     stage('Update Kubernetes Manifest') {
       steps {
         sh '''
-          # Update the image inside the Kubernetes manifest
+          echo "[INFO] Updating Kubernetes manifest with latest Docker image"
+
+          # Replace image in app.yaml
           sed -i 's|image:.*|image: shadyemad/gitops-app:latest|' kubernetes/app.yaml
 
-          # Configure Git user for commit
-          git config --global user.name "jenkins"
-          git config --global user.email "jenkins@example.com"
+          # Set git user details (safe even if already set)
+          git config user.name "jenkins"
+          git config user.email "jenkins@example.com"
 
-          # Stage the file
+          # Stage the change
           git add kubernetes/app.yaml || true
 
-          # Only commit and push if there are actual changes
+          # Check if there is a change before committing
           if ! git diff --cached --quiet; then
             git commit -m "Update image to latest"
             git push origin main
+            echo "[INFO] Git push completed."
           else
-            echo "No changes to commit. Skipping git push."
+            echo "[INFO] No changes to commit."
           fi
         '''
       }
@@ -62,7 +65,7 @@ pipeline {
       echo 'Pipeline completed successfully.'
     }
     failure {
-      echo 'Pipeline failed.'
+      echo ' Pipeline failed.'
     }
   }
 }
