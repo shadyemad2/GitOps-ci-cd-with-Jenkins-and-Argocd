@@ -30,6 +30,7 @@ This project demonstrates a complete GitOps workflow using **Jenkins** for conti
 
 ```
 ```
+
 GitOps-ci-cd-with-Jenkins-and-Argocd/
 ├── argocd/
 │   └── app.yaml
