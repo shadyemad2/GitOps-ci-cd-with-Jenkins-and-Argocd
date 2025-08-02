@@ -3,20 +3,22 @@ pipeline {
 
   environment {
     DOCKER_HUB_CREDENTIALS_ID = 'docker-hub-reg'
-    DOCKER_IMAGE = 'shadyemad/gitops-app:latest'
+    DOCKER_IMAGE = 'shadyemad/gitops-app'
+    DOCKER_TAG = 'latest'
+    GIT_BRANCH = 'main'
   }
 
   stages {
     stage('Checkout') {
       steps {
-        git branch: 'main', url: 'https://github.com/shadyemad2/GitOps-ci-cd-with-Jenkins-and-Argocd.git'
+        git branch: "${GIT_BRANCH}", url: 'https://github.com/shadyemad2/GitOps-ci-cd-with-Jenkins-and-Argocd.git'
       }
     }
 
     stage('Build Docker Image') {
       steps {
         script {
-          docker.build("${DOCKER_IMAGE}")
+          docker.build("${DOCKER_IMAGE}:${DOCKER_TAG}")
         }
       }
     }
@@ -25,7 +27,7 @@ pipeline {
       steps {
         script {
           docker.withRegistry('https://index.docker.io/v1/', "${DOCKER_HUB_CREDENTIALS_ID}") {
-            def app = docker.image("${DOCKER_IMAGE}")
+            def app = docker.image("${DOCKER_IMAGE}:${DOCKER_TAG}")
             app.push()
           }
         }
@@ -36,24 +38,16 @@ pipeline {
       steps {
         sh '''
           echo "[INFO] Updating Kubernetes manifest with latest Docker image"
-
-          # Replace image in app.yaml
-          sed -i 's|image:.*|image: shadyemad/gitops-app:latest|' kubernetes/app.yaml
-
-          # Set git user details (safe even if already set)
+          sed -i "s|image: .*|image: ${DOCKER_IMAGE}:${DOCKER_TAG}|" kubernetes/app.yaml
           git config user.name "jenkins"
           git config user.email "jenkins@example.com"
-
-          # Stage the change
           git add kubernetes/app.yaml || true
-
-          # Check if there is a change before committing
           if ! git diff --cached --quiet; then
-            git commit -m "Update image to latest"
-            git push origin main
+            git commit -m "Update image to ${DOCKER_IMAGE}:${DOCKER_TAG}"
+            git push origin ${GIT_BRANCH}
             echo "[INFO] Git push completed."
           else
-            echo "[INFO] No changes to commit."
+            echo "[INFO] No changes detected; skipping commit."
           fi
         '''
       }
@@ -65,7 +59,7 @@ pipeline {
       echo 'Pipeline completed successfully.'
     }
     failure {
-      echo ' Pipeline failed.'
+      echo 'Pipeline failed.'
     }
   }
 }
