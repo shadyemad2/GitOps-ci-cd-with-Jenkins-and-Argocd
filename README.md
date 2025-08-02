@@ -5,13 +5,16 @@ This project demonstrates a complete GitOps workflow using **Jenkins** for conti
 ## 📸 Screenshots
 
 ### ✅ Jenkins CI Pipeline
-![Jenkins CI](screenshots/jenkins.png)
+
+<img width="1668" height="754" alt="jenkins" src="https://github.com/user-attachments/assets/4d51f399-daef-4879-9b34-b7cb2aa33307" />
 
 ### ✅ ArgoCD Dashboard
-![ArgoCD UI](screenshots/argocd.png)
+
+<img width="1920" height="815" alt="argocd" src="https://github.com/user-attachments/assets/7417d189-94d6-46a5-977a-921c859e1cf1" />
 
 ### ✅ Deployed Application UI
-![App UI](screenshots/app.png)
+
+<img width="1857" height="867" alt="app" src="https://github.com/user-attachments/assets/21d3ffa2-99e1-493d-baf1-fedf51f38fc2" />
 
 ---
 
