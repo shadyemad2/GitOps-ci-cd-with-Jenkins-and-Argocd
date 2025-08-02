@@ -1,6 +1,6 @@
 # 🚀 GitOps CI/CD with Jenkins and ArgoCD
 
-This project demonstrates a complete GitOps workflow using **Jenkins** for continuous integration and **ArgoCD** for continuous deployment on a Kubernetes cluster (Minikube).
+This project demonstrates a complete GitOps workflow using **Jenkins** for continuous integration and **ArgoCD** for continuous deployment on a Kubernetes cluster.
 
 ## 📸 Screenshots
 
