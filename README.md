@@ -27,10 +27,7 @@ This project demonstrates a complete GitOps workflow using **Jenkins** for conti
 - **GitHub** – Source of truth for manifests
 
 ## 📁 Project Structure
-
 ```
-```
-
 GitOps-ci-cd-with-Jenkins-and-Argocd/
 ├── argocd/
 │   └── app.yaml
