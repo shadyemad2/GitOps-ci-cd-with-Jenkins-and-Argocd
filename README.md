@@ -25,8 +25,8 @@ This project demonstrates a complete GitOps workflow using **Jenkins** for conti
 - **Kubernetes (Minikube)** – Deploy and run the app  
 - **ArgoCD** – GitOps deployment from GitHub repo  
 - **GitHub** – Source of truth for manifests
-
 ## 📁 Project Structure
+
 ```
 GitOps-ci-cd-with-Jenkins-and-Argocd/
 ├── argocd/
@@ -50,6 +50,7 @@ GitOps-ci-cd-with-Jenkins-and-Argocd/
 ├── package.json
 └── package-lock.json
 ```
+
 
 ## ✅ Jenkins Pipeline Steps
 
