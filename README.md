@@ -2,6 +2,9 @@
 
 This project demonstrates a complete GitOps workflow using **Jenkins** for continuous integration and **ArgoCD** for continuous deployment on a Kubernetes cluster.
 
+<img width="802" height="277" alt="gitops" src="https://github.com/user-attachments/assets/63c83bd0-b2e9-4c43-8a07-bfa06de15117" />
+
+
 ## 📸 Screenshots
 
 ### ✅ Jenkins CI Pipeline
